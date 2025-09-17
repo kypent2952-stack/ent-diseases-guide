@@ -1,1 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼그렌 증후군 전문가 임상 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Muted Greys & Blues -->
+    <!-- Application Structure Plan: A single-page professional reference guide with a sticky, fixed left-side navigation for fast access to all sections. The main content area is a scrollable column that details each topic in depth, using headings, tables, and bullet points. The addition of the ACR/EULAR criteria calculator enhances the usability of the diagnosis section, turning a static list into a practical, interactive tool for clinicians to reference and apply. -->
+    <!-- Visualization & Content Choices: 1. Demographics -> Goal: Inform -> Viz: Donut & Bar Charts (Chart.js) -> Justification: Provides a quick, clear summary of key epidemiological data. 2. Diagnostic Flow & Criteria -> Goal: Organize/Apply -> Viz: HTML/CSS Flowchart & Interactive Checklist -> Justification: The flowchart simplifies the process, while the checklist with a live score calculator transforms a static diagnostic rule set into a direct clinical aid. 3. Differential Diagnosis -> Goal: Compare -> Viz: HTML Table -> Justification: A table is the most effective way to compare and contrast multiple conditions. All visualizations are built on Canvas or pure HTML/CSS, confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F8F9FA;
+            color: #343A40;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flowchart-arrow {
+            position: relative;
+            width: 2px;
+            height: 40px;
+            background-color: #0077B6;
+            margin: 0 auto;
+        }
+        .flowchart-arrow::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -4px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #0077B6;
+        }
+    </style>
+</head>
+<body class="flex">
+    <nav class="hidden md:block w-64 bg-white shadow-lg fixed h-full overflow-y-auto p-6 z-50">
+        <h1 class="text-2xl font-bold mb-6 text-[#004B8D]">쇼그렌 임상 가이드</h1>
+        <ul class="space-y-2">
+            <li><a href="#overview" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">개요</a></li>
+            <li><a href="#symptoms" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">임상 증상</a></li>
+            <li><a href="#diagnosis" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">진단 및 감별진단</a></li>
+            <li><a href="#lab-tests" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">혈액검사 판독</a></li>
+            <li><a href="#biopsy" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">조직검사 및 확진</a></li>
+            <li><a href="#treatment" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">치료</a></li>
+            <li><a href="#prognosis" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium">예후 및 추적 관찰</a></li>
+        </ul>
+    </nav>
+    <main class="flex-1 md:ml-64 p-4 md:p-12">
+        <header class="text-center my-8 md:my-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#004B8D]">쇼그렌 증후군: 전문가 임상 가이드</h1>
+            <p class="mt-2 text-lg text-gray-600">최신 임상 지견을 반영한 진단 및 치료 가이드라인</p>
+        </header>
+
+        <section id="overview" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">개요 및 역학</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8 border-t-4 border-[#0077B6]">
+                <p class="text-gray-700 leading-relaxed mb-4">쇼그렌 증후군은 림프구의 외분비샘 침윤을 특징으로 하는 만성 전신성 자가면역질환으로, 안구 건조(건성 각결막염) 및 구강 건조(구강 건조증)를 주요 임상 양상으로 합니다. 단독으로 발생하는 일차성(Primary SS)과 류마티스 관절염, 루푸스 등 다른 자가면역질환과 동반되는 이차성(Secondary SS)으로 분류됩니다.</p>
+                <div class="grid md:grid-cols-2 gap-8 mt-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-center mb-4">성별 분포 (유병률)</h3>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-center mb-4">발병 연령 분포</h3>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="ageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="symptoms" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">임상 증상</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <p class="text-gray-700 leading-relaxed mb-4">쇼그렌 증후군 환자는 건조 증상 외에도 다양한 전신 증상을 호소합니다. 증상 발현 양상은 매우 비특이적이므로 타 질환과의 감별진단이 중요합니다.</p>
+                <div class="grid md:grid-cols-2 gap-8 mt-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">1. 샘 증상 (Glandular)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong class="text-[#0077B6]">안구 건조증:</strong> 눈의 이물감, 작열감, 충혈, 눈부심.</li>
+                            <li><strong class="text-[#0077B6]">구강 건조증:</strong> 말하기, 삼키기 어려움, 미각 변화, 치아 우식증 및 잇몸 질환 증가, 구강 칸디다증.</li>
+                            <li><strong class="text-[#0077B6]">기타:</strong> 피부, 비강, 질 등 점막 건조.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">2. 샘외 증상 (Extra-glandular)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong class="text-[#0077B6]">전신성 피로:</strong> 환자의 약 70-80%가 호소하는 주요 증상.</li>
+                            <li><strong class="text-[#0077B6]">관절 및 근육통:</strong> 비대칭성, 비미란성 관절염.</li>
+                            <li><strong class="text-[#0077B6]">폐 침범:</strong> 간질성 폐렴, 기관지염.</li>
+                            <li><strong class="text-[#0077B6]">신경계 침범:</strong> 말초신경병증 (감각 이상, 통증).</li>
+                            <li><strong class="text-[#0077B6]">피부:</strong> 혈관염성 자반증, 홍반.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="diagnosis" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">진단 및 감별진단</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h3 class="text-xl font-semibold mb-4 text-center">2016 ACR/EULAR 분류 기준 점수 계산기</h3>
+                <p class="mb-6 text-gray-600">아래 항목 중 환자에게 해당하는 객관적 검사 소견을 선택하여 총점을 계산하세요. 총 4점 이상일 경우 일차성 쇼그렌 증후군으로 분류할 수 있습니다.</p>
+                <div id="diagnostic-criteria" class="space-y-4">
+                    <label class="flex items-start p-4 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                        <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#0077B6] focus:ring-[#0077B6] mt-1" data-score="3">
+                        <span class="ml-4">
+                            <span class="font-semibold">침샘 조직검사에서 림프구성 타액선염 (Focus score ≥ 1) 소견</span>
+                            <span class="block text-sm text-gray-500">가장 특이도가 높은 검사로, 1점 이상의 초점 점수를 보입니다. (3점)</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start p-4 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                        <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#0077B6] focus:ring-[#0077B6] mt-1" data-score="3">
+                        <span class="ml-4">
+                            <span class="font-semibold">혈액검사에서 Anti-SSA(Ro) 항체 양성</span>
+                            <span class="block text-sm text-gray-500">가장 흔하게 발견되는 자가항체입니다. (3점)</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start p-4 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                        <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#0077B6] focus:ring-[#0077B6] mt-1" data-score="1">
+                        <span class="ml-4">
+                            <span class="font-semibold">안구표면염색 점수 (Ocular Staining Score) ≥ 5 (최소 한쪽 눈)</span>
+                            <span class="block text-sm text-gray-500">각막 손상 정도를 평가하는 검사입니다. (1점)</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start p-4 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                        <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#0077B6] focus:ring-[#0077B6] mt-1" data-score="1">
+                        <span class="ml-4">
+                            <span class="font-semibold">쉬르머 검사 (Schirmer's test) ≤ 5 mm/5 min (최소 한쪽 눈)</span>
+                            <span class="block text-sm text-gray-500">눈물 분비량 감소를 확인하는 검사입니다. (1점)</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start p-4 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                        <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#0077B6] focus:ring-[#0077B6] mt-1" data-score="1">
+                        <span class="ml-4">
+                            <span class="font-semibold">자극없는 상태의 타액 분비율 ≤ 0.1 mL/min</span>
+                            <span class="block text-sm text-gray-500">침 분비량 감소를 객관적으로 측정합니다. (1점)</span>
+                        </span>
+                    </label>
+                </div>
+                <div id="diagnosis-result" class="mt-8 text-center p-6 rounded-lg bg-gray-100">
+                    <h4 class="text-xl font-bold">총점: <span id="score" class="text-[#0077B6]">0</span>점</h4>
+                    <p id="result-text" class="mt-2 text-lg font-medium text-gray-700">분류 기준을 충족하지 않습니다.</p>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 mt-8">주요 감별진단</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">쇼그렌 증후군과 유사한 증상을 유발할 수 있는 질환들입니다. 객관적인 검사 소견을 통해 감별하는 것이 중요합니다.</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <thead>
+                            <tr class="bg-gray-100 text-left text-sm font-semibold text-gray-600">
+                                <th class="py-3 px-4 border-b">질환</th>
+                                <th class="py-3 px-4 border-b">특징적인 소견</th>
+                                <th class="py-3 px-4 border-b">감별 포인트</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-3 px-4 border-b">건조성 안구염</td>
+                                <td class="py-3 px-4 border-b">안구 건조 증상, 쉬르머 검사 이상</td>
+                                <td class="py-3 px-4 border-b">샘외 증상 없음, 자가항체 음성</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-3 px-4 border-b">류마티스 관절염</td>
+                                <td class="py-3 px-4 border-b">관절 침범, 침샘 비대 동반 가능</td>
+                                <td class="py-3 px-4 border-b">파괴성 관절염, 항CCP 항체 양성</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-3 px-4 border-b">IgG4-관련 질환</td>
+                                <td class="py-3 px-4 border-b">타액선/눈물샘 비대, 림프구 침윤</td>
+                                <td class="py-3 px-4 border-b">혈중 IgG4 상승, IgG4+형질세포 침윤</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="lab-tests" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">혈액검사 판독: 자가항체 및 생체표지자</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <p class="text-gray-700 leading-relaxed mb-4">다음은 쇼그렌 증후군 진단에 중요한 자가항체들의 유병률과 임상적 의미입니다.</p>
+                <div class="chart-container" style="max-width: 800px; height: 350px;">
+                    <canvas id="antibodyChart"></canvas>
+                </div>
+                <ul class="mt-8 list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="font-bold">항핵항체 (ANA):</strong> 환자의 약 95%에서 양성. 다양한 자가면역질환에서 나타나므로 특이도는 낮음.</li>
+                    <li><strong class="font-bold">Anti-SSA/Ro 항체:</strong> 일차성 쇼그렌 증후군 환자의 약 70%에서 양성. 진단에 가장 중요한 항체 중 하나.</li>
+                    <li><strong class="font-bold">Anti-La/SSB 항체:</strong> 일차성 쇼그렌 증후군 환자의 약 40%에서 양성. Anti-SSA 항체와 동반될 경우 신생아 루푸스 등 태아 합병증 위험 증가.</li>
+                    <li><strong class="font-bold">류마티스 인자 (RF):</strong> 약 60-70%에서 양성.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="biopsy" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">확진에 필요한 조직검사</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h3 class="text-xl font-semibold mb-4">소타액선 조직검사 (Salivary Gland Biopsy)</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">침샘 조직검사는 쇼그렌 증후군의 <strong class="text-[#0077B6]">확진에 가장 중요한 검사</strong>입니다. 일반적으로 입술 안쪽의 소타액선을 채취하여 검사합니다. 특히 혈액 검사에서 자가항체가 음성인 경우 진단을 확정하는 데 필수적입니다.</p>
+                <h4 class="font-semibold mt-6 mb-2">판독 및 초점 점수 (Focus Score)</h4>
+                <p class="text-gray-700 leading-relaxed">조직검사 결과는 림프구의 침윤 정도를 바탕으로 '초점 점수(Focus Score)'로 평가합니다. 이는 면적당 림프구 군집의 수를 측정하며, 초점 점수 1점 이상은 진단적 의미를 가집니다.</p>
+                <div class="flex justify-center mt-6">
+                    <div class="bg-gray-100 rounded-lg p-4 text-center font-medium max-w-sm">
+                        <p class="text-xl">초점 점수 ≥ 1점</p>
+                        <p class="text-sm mt-1 text-gray-600">진단 기준 충족</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="treatment" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">치료: 증상 완화 및 질병 활성도 조절</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <p class="text-gray-700 leading-relaxed mb-4">쇼그렌 증후군의 치료는 크게 건조 증상을 완화하는 대증요법과 질병 활성도를 조절하는 전신 치료로 나뉩니다.</p>
+                <div class="grid md:grid-cols-2 gap-8 mt-8">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold mb-2">1. 대증적 치료 (Symptomatic)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong class="text-[#0077B6]">안구:</strong> 인공눈물, 점안액 (사이클로스포린 A, 리피테그라스트), 눈물점 폐쇄술.</li>
+                            <li><strong class="text-[#0077B6]">구강:</strong> 인공타액, 침 분비 촉진제 (필로카르핀, 세비멜린), 철저한 구강 위생 관리.</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold mb-2">2. 전신 치료 (Systemic)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong class="text-[#0077B6]">질병 조절 항류마티스제(DMARDs):</strong> 하이드록시클로로퀸(HCQ)이 표준 치료.</li>
+                            <li><strong class="text-[#0077B6]">면역억제제:</strong> 중증 장기 침범 시 스테로이드, 메토트렉세이트, 아자치오프린 등 사용.</li>
+                            <li><strong class="text-[#0077B6]">생물학적 제제:</strong> B세포를 표적으로 하는 리툭시맙(Rituximab)이 일부 환자에게 효과적.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="prognosis" class="mb-12 md:mb-16">
+            <h2 class="text-2xl font-bold mb-4 text-[#004B8D]">예후 및 장기 추적 관찰</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <p class="text-gray-700 leading-relaxed mb-4">대부분의 쇼그렌 증후군 환자는 정상 수명을 누리지만, 주요 합병증에 대한 정기적인 모니터링이 필수적입니다. 특히 림프종 발생 위험에 대한 인지가 중요합니다.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 mt-4">
+                    <li><strong class="font-bold">주요 사망 원인:</strong> 악성 림프종, 감염증, 심혈관계 질환.</li>
+                    <li><strong class="font-bold">림프종 위험:</strong> 일반인 대비 약 15-20배 증가. 지속적인 림프절 종창, 발열, 체중 감소 등에 대한 주의 필요.</li>
+                    <li><strong class="font-bold">임신:</strong> Anti-SSA/Ro 항체 양성 산모는 태아에게 신생아 루푸스나 선천성 심장 차단을 유발할 수 있으므로, 임신 계획 시 전문가 상담이 필수적.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const chartTooltipCallback = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                          return label.join(' ');
+                        } else {
+                          return label;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const genderCtx = document.getElementById('genderChart').getContext('2d');
+    new Chart(genderCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['여성', '남성'],
+            datasets: [{
+                data: [90, 10],
+                backgroundColor: ['#0077B6', '#D8E2DC'],
+                borderColor: '#ffffff',
+                borderWidth: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: chartTooltipCallback.plugins.tooltip
+            },
+            cutout: '60%'
+        }
+    });
+
+    const ageCtx = document.getElementById('ageChart').getContext('2d');
+    new Chart(ageCtx, {
+        type: 'bar',
+        data: {
+            labels: ['20-39세', '40-49세', '50-59세', '60세 이상'],
+            datasets: [{
+                label: '연령별 분포',
+                data: [20, 35, 30, 15],
+                backgroundColor: '#0077B6',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    ...chartTooltipCallback.plugins.tooltip,
+                    callbacks: {
+                         ...chartTooltipCallback.plugins.tooltip.callbacks,
+                        label: function(context) {
+                            return `분포: ${context.raw}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { display: false } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    const antibodyCtx = document.getElementById('antibodyChart').getContext('2d');
+    new Chart(antibodyCtx, {
+        type: 'bar',
+        data: {
+            labels: ['항핵항체 (ANA)', 'Anti-SSA/Ro 항체', '류마티스 인자 (RF)', 'Anti-La/SSB 항체'],
+            datasets: [{
+                label: '유병률 (%)',
+                data: [95, 70, 65, 40],
+                backgroundColor: ['#0077B6', '#0096C7', '#00B4D8', '#48CAE4'],
+                borderRadius: 4
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: chartTooltipCallback.plugins.tooltip
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { color: '#E9ECEF' },
+                    ticks: {
+                        callback: function(value) { return value + "%" }
+                    }
+                },
+                y: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    const criteriaCheckboxes = document.querySelectorAll('#diagnostic-criteria input[type="checkbox"]');
+    const scoreEl = document.getElementById('score');
+    const resultTextEl = document.getElementById('result-text');
+
+    criteriaCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            let totalScore = 0;
+            criteriaCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    totalScore += parseInt(cb.dataset.score);
+                }
+            });
+            scoreEl.textContent = totalScore;
+            if (totalScore >= 4) {
+                resultTextEl.textContent = '분류 기준을 충족합니다 (일차성 쇼그렌 증후군).';
+                resultTextEl.classList.remove('text-gray-700');
+                resultTextEl.classList.add('text-green-700');
+            } else {
+                resultTextEl.textContent = '분류 기준을 충족하지 않습니다.';
+                resultTextEl.classList.remove('text-green-700');
+                resultTextEl.classList.add('text-gray-700');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
 
