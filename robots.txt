@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /ent-diseases-guide/archive/
+Disallow: /ent-diseases-guide/tools/
+
+Sitemap: https://kypent2952-stack.github.io/ent-diseases-guide/sitemap.xml

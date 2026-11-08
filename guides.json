@@ -1,0 +1,72 @@
+{
+  "_comment": "가이드 목록의 단일 원본. index.html이 이 파일을 읽어 카드를 그립니다. 항목 추가·수정 후 index.html 안 <noscript>/폴백 목록도 맞춰 두면 JSON을 못 읽는 환경에서도 같은 내용이 보입니다. url 은 모두 '주소 확인 필요'(verified:false) 상태입니다.",
+  "updated": "2026-11-08",
+  "categories": [
+    { "id": "sleep", "name": "수면", "icon": "🌙", "description": "수면무호흡·기면증·수면검사 판독" },
+    { "id": "voice", "name": "음성·후두", "icon": "🎙️", "description": "음성치료와 후두 건강" },
+    { "id": "oral", "name": "구강·침샘·자가면역", "icon": "💧", "description": "구강건조·침샘·자가면역 질환" },
+    { "id": "etc", "name": "기타", "icon": "📚", "description": "그 밖의 자료" }
+  ],
+  "guides": [
+    {
+      "id": "aasm-scoring",
+      "category": "sleep",
+      "title": "AASM 수면 단계 심층 판독 가이드",
+      "summary": "AASM 기준에 따른 수면 단계·각성·호흡 사건 판독을 단계별로 정리한 판독 참고서",
+      "audience": ["pro"],
+      "url": "https://kypent2952-stack.github.io/kypent2952.github.io/",
+      "repo": "kypent2952.github.io",
+      "keywords": ["AASM", "수면다원검사", "PSG", "판독", "수면 단계", "scoring"],
+      "verified": false
+    },
+    {
+      "id": "narcolepsy",
+      "category": "sleep",
+      "title": "기면증의 모든 것",
+      "summary": "기면증의 최신 연구부터 진단·치료·생활 관리까지 한눈에 보는 가이드",
+      "audience": ["pro", "patient"],
+      "url": "https://kypent2952-stack.github.io/narcolepsy-guide/",
+      "repo": "narcolepsy-guide",
+      "keywords": ["기면증", "narcolepsy", "탈력발작", "주간 졸림", "MSLT", "오렉신"],
+      "verified": false
+    },
+    {
+      "id": "cpap",
+      "category": "sleep",
+      "title": "CPAP 양압기 안내",
+      "summary": "수면무호흡 양압기(CPAP) 사용과 관리에 관한 안내 페이지",
+      "audience": ["patient"],
+      "url": "https://kypent-cpap.netlify.app",
+      "repo": "(Netlify)",
+      "keywords": ["CPAP", "양압기", "수면무호흡", "OSA", "마스크"],
+      "verified": false
+    },
+    {
+      "id": "sovt",
+      "category": "voice",
+      "title": "집에서 하는 SOVT 음성치료",
+      "summary": "빨대 발성 등 반폐쇄 성도 운동(SOVT)을 집에서 따라 하는 음성치료 앱",
+      "audience": ["patient"],
+      "url": "https://kypent2952-stack.github.io/speech/",
+      "repo": "speech",
+      "keywords": ["SOVT", "음성치료", "빨대 발성", "쉰 목소리", "성대", "발성 연습"],
+      "verified": false
+    },
+    {
+      "id": "sjogren",
+      "category": "oral",
+      "title": "쇼그렌 증후군 가이드",
+      "summary": "구강·안구 건조부터 진단 기준(ACR/EULAR), 검사 판독, 치료까지 정리한 임상 가이드",
+      "audience": ["pro", "patient"],
+      "url": "https://kypent2952-stack.github.io/sjogrens-guide/",
+      "repo": "sjogrens-guide",
+      "keywords": ["쇼그렌", "Sjögren", "구강건조", "안구건조", "침샘", "자가면역", "ACR/EULAR"],
+      "verified": false
+    }
+  ],
+  "upcoming": [
+    { "title": "구강내 병변 가이드", "category": "oral", "summary": "구내염·백반증 등 입안 병변의 감별과 진료 시점" },
+    { "title": "수면다원검사 안내", "category": "sleep", "summary": "검사 전 준비, 검사 당일 과정, 결과지 읽는 법" },
+    { "title": "음성위생 가이드", "category": "voice", "summary": "목소리를 아끼는 생활 습관과 직업군별 주의점" }
+  ]
+}

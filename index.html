@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>이비인후과 건강 가이드 모음</title>
+  <meta name="description" content="이비인후과 전문의가 직접 만든 수면·음성·구강·자가면역 질환 건강 가이드 모음. 의료진용 판독 자료와 환자용 안내서를 한곳에서 찾아보세요.">
+  <meta name="theme-color" content="#1F5FA8">
+  <link rel="canonical" href="https://kypent2952-stack.github.io/ent-diseases-guide/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="이비인후과 건강 가이드 모음">
+  <meta property="og:title" content="이비인후과 건강 가이드 모음">
+  <meta property="og:description" content="수면·음성·구강·자가면역 질환을 다룬 의료진용·환자용 가이드를 한곳에 모았습니다.">
+  <meta property="og:url" content="https://kypent2952-stack.github.io/ent-diseases-guide/">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231F5FA8'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3EENT%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="assets/kyp-theme.css">
+  <style>
+    .hero {
+      background: linear-gradient(160deg, var(--kyp-accent-soft), var(--kyp-bg) 70%);
+      border-bottom: 1px solid var(--kyp-border);
+      padding: 48px 0 32px;
+    }
+    .hero__eyebrow { margin: 0 0 8px; font-weight: 600; color: var(--kyp-accent); font-size: 15px; }
+    .hero h1 { margin: 0 0 12px; font-size: clamp(28px, 7vw, 44px); font-weight: 800; }
+    .hero__lead { margin: 0 0 24px; color: var(--kyp-text-muted); font-size: 17px; max-width: 40em; }
+
+    .search { display: grid; gap: 12px; max-width: 720px; }
+    .search label { font-weight: 600; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+    .chips legend { font-weight: 600; margin-bottom: 8px; padding: 0; width: 100%; }
+    .chip {
+      min-height: 40px; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid var(--kyp-border); background: var(--kyp-surface);
+      color: var(--kyp-text); font: inherit; font-size: 15px; cursor: pointer;
+    }
+    .chip[aria-pressed="true"] { background: var(--kyp-accent); border-color: var(--kyp-accent); color: var(--kyp-on-accent); font-weight: 600; }
+    .filters { display: grid; gap: 16px; }
+    @media (min-width: 768px) { .filters { grid-template-columns: 1fr auto; align-items: end; } }
+
+    main { padding: 32px 0 48px; }
+    .status { color: var(--kyp-text-muted); margin: 0 0 16px; min-height: 1.6em; }
+    .cat { margin: 0 0 40px; }
+    .cat__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .cat__head h2 { margin: 0; font-size: 22px; }
+    .cat__head p { margin: 0; color: var(--kyp-text-muted); font-size: 15px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: 1fr; list-style: none; margin: 0; padding: 0; }
+    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .guide { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+    .guide h3 { margin: 0; font-size: 18px; }
+    .guide p { margin: 0; color: var(--kyp-text-muted); flex: 1; }
+    .guide__tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .guide__actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+    .guide__repo { font-size: 13px; color: var(--kyp-text-muted); }
+
+    .empty { text-align: center; padding: 32px 16px; }
+    .empty p { margin: 0 0 12px; }
+
+    .upcoming { border-top: 1px solid var(--kyp-border); padding-top: 32px; }
+    .upcoming h2 { margin: 0 0 6px; font-size: 22px; }
+    .upcoming > p { margin: 0 0 16px; color: var(--kyp-text-muted); }
+    .soon { border-style: dashed; box-shadow: none; background: var(--kyp-surface-2); }
+    .soon h3 { margin: 0 0 6px; font-size: 17px; }
+    .soon p { margin: 0; color: var(--kyp-text-muted); }
+
+    footer { border-top: 1px solid var(--kyp-border); padding: 24px 0 40px; color: var(--kyp-text-muted); font-size: 14px; }
+    footer p { margin: 0 0 6px; }
+  </style>
+</head>
+<body>
+  <a class="kyp-skip" href="#guides">본문(가이드 목록) 바로가기</a>
+
+  <header class="hero">
+    <div class="kyp-container">
+      <p class="hero__eyebrow">이비인후과 전문의가 직접 만든</p>
+      <h1>이비인후과 건강 가이드 모음</h1>
+      <p class="hero__lead">수면, 목소리, 입안·침샘, 자가면역 질환까지. 진료실에서 자주 받는 질문과 의료진용 판독 자료를 분야별로 모았습니다.</p>
+
+      <div class="filters" role="search">
+        <div class="search">
+          <label for="q">가이드 검색</label>
+          <input id="q" class="kyp-input" type="search" placeholder="예: 기면증, CPAP, 쉰 목소리, 구강건조" autocomplete="off" aria-describedby="status">
+        </div>
+        <fieldset class="chips" id="aud">
+          <legend>대상</legend>
+          <button type="button" class="chip" data-aud="all" aria-pressed="true">전체</button>
+          <button type="button" class="chip" data-aud="patient" aria-pressed="false">환자</button>
+          <button type="button" class="chip" data-aud="pro" aria-pressed="false">의료진</button>
+        </fieldset>
+      </div>
+    </div>
+  </header>
+
+  <main id="guides" tabindex="-1">
+    <div class="kyp-container">
+      <p class="status" id="status" aria-live="polite"></p>
+
+      <div id="list">
+<!-- FALLBACK:HTML:START (tools/build_fallback.py가 guides.json으로 자동 생성 — 직접 수정 금지) -->
+<section class="cat" data-cat="sleep" aria-labelledby="cat-sleep"><div class="cat__head"><h2 id="cat-sleep"><span aria-hidden="true">🌙</span> 수면</h2><p>수면무호흡·기면증·수면검사 판독</p></div><ul class="grid"><li><article class="kyp-card guide"><h3>AASM 수면 단계 심층 판독 가이드</h3><div class="guide__tags"><span class="kyp-badge kyp-badge--pro">의료진</span></div><p>AASM 기준에 따른 수면 단계·각성·호흡 사건 판독을 단계별로 정리한 판독 참고서</p><div class="guide__actions"><a class="kyp-btn" href="https://kypent2952-stack.github.io/kypent2952.github.io/" aria-label="AASM 수면 단계 심층 판독 가이드 바로가기">바로가기 →</a></div></article></li><li><article class="kyp-card guide"><h3>기면증의 모든 것</h3><div class="guide__tags"><span class="kyp-badge kyp-badge--pro">의료진</span><span class="kyp-badge kyp-badge--patient">환자</span></div><p>기면증의 최신 연구부터 진단·치료·생활 관리까지 한눈에 보는 가이드</p><div class="guide__actions"><a class="kyp-btn" href="https://kypent2952-stack.github.io/narcolepsy-guide/" aria-label="기면증의 모든 것 바로가기">바로가기 →</a></div></article></li><li><article class="kyp-card guide"><h3>CPAP 양압기 안내</h3><div class="guide__tags"><span class="kyp-badge kyp-badge--patient">환자</span></div><p>수면무호흡 양압기(CPAP) 사용과 관리에 관한 안내 페이지</p><div class="guide__actions"><a class="kyp-btn" href="https://kypent-cpap.netlify.app" aria-label="CPAP 양압기 안내 바로가기">바로가기 →</a></div></article></li></ul></section><section class="cat" data-cat="voice" aria-labelledby="cat-voice"><div class="cat__head"><h2 id="cat-voice"><span aria-hidden="true">🎙️</span> 음성·후두</h2><p>음성치료와 후두 건강</p></div><ul class="grid"><li><article class="kyp-card guide"><h3>집에서 하는 SOVT 음성치료</h3><div class="guide__tags"><span class="kyp-badge kyp-badge--patient">환자</span></div><p>빨대 발성 등 반폐쇄 성도 운동(SOVT)을 집에서 따라 하는 음성치료 앱</p><div class="guide__actions"><a class="kyp-btn" href="https://kypent2952-stack.github.io/speech/" aria-label="집에서 하는 SOVT 음성치료 바로가기">바로가기 →</a></div></article></li></ul></section><section class="cat" data-cat="oral" aria-labelledby="cat-oral"><div class="cat__head"><h2 id="cat-oral"><span aria-hidden="true">💧</span> 구강·침샘·자가면역</h2><p>구강건조·침샘·자가면역 질환</p></div><ul class="grid"><li><article class="kyp-card guide"><h3>쇼그렌 증후군 가이드</h3><div class="guide__tags"><span class="kyp-badge kyp-badge--pro">의료진</span><span class="kyp-badge kyp-badge--patient">환자</span></div><p>구강·안구 건조부터 진단 기준(ACR/EULAR), 검사 판독, 치료까지 정리한 임상 가이드</p><div class="guide__actions"><a class="kyp-btn" href="https://kypent2952-stack.github.io/sjogrens-guide/" aria-label="쇼그렌 증후군 가이드 바로가기">바로가기 →</a></div></article></li></ul></section>
+<!-- FALLBACK:HTML:END -->
+      </div>
+
+      <section class="upcoming" aria-labelledby="soon-title">
+        <h2 id="soon-title">곧 추가될 가이드</h2>
+        <p>준비 중인 자료입니다. 완성되면 이곳에 바로가기가 생깁니다.</p>
+        <ul class="grid" id="upcoming">
+<!-- FALLBACK:UPCOMING:START -->
+<li><div class="kyp-card soon"><span class="kyp-badge">준비 중</span><h3>구강내 병변 가이드</h3><p>구내염·백반증 등 입안 병변의 감별과 진료 시점</p></div></li><li><div class="kyp-card soon"><span class="kyp-badge">준비 중</span><h3>수면다원검사 안내</h3><p>검사 전 준비, 검사 당일 과정, 결과지 읽는 법</p></div></li><li><div class="kyp-card soon"><span class="kyp-badge">준비 중</span><h3>음성위생 가이드</h3><p>목소리를 아끼는 생활 습관과 직업군별 주의점</p></div></li>
+<!-- FALLBACK:UPCOMING:END -->
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="kyp-container">
+      <p>이 사이트의 내용은 건강 정보 제공을 위한 것으로, 개인의 진단과 치료를 대신하지 않습니다. 증상이 있으면 진료를 받으세요.</p>
+      <p>보관 자료: <a href="sjogren.html">쇼그렌 가이드 구판</a> · <a href="archive/narcolepsy.html">기면증 가이드 보관본</a></p>
+    </div>
+  </footer>
+
+<!-- FALLBACK:JSON:START -->
+<script type="application/json" id="guides-fallback">{"categories":[{"id":"sleep","name":"수면","icon":"🌙","description":"수면무호흡·기면증·수면검사 판독"},{"id":"voice","name":"음성·후두","icon":"🎙️","description":"음성치료와 후두 건강"},{"id":"oral","name":"구강·침샘·자가면역","icon":"💧","description":"구강건조·침샘·자가면역 질환"},{"id":"etc","name":"기타","icon":"📚","description":"그 밖의 자료"}],"guides":[{"id":"aasm-scoring","category":"sleep","title":"AASM 수면 단계 심층 판독 가이드","summary":"AASM 기준에 따른 수면 단계·각성·호흡 사건 판독을 단계별로 정리한 판독 참고서","audience":["pro"],"url":"https://kypent2952-stack.github.io/kypent2952.github.io/","repo":"kypent2952.github.io","keywords":["AASM","수면다원검사","PSG","판독","수면 단계","scoring"],"verified":false},{"id":"narcolepsy","category":"sleep","title":"기면증의 모든 것","summary":"기면증의 최신 연구부터 진단·치료·생활 관리까지 한눈에 보는 가이드","audience":["pro","patient"],"url":"https://kypent2952-stack.github.io/narcolepsy-guide/","repo":"narcolepsy-guide","keywords":["기면증","narcolepsy","탈력발작","주간 졸림","MSLT","오렉신"],"verified":false},{"id":"cpap","category":"sleep","title":"CPAP 양압기 안내","summary":"수면무호흡 양압기(CPAP) 사용과 관리에 관한 안내 페이지","audience":["patient"],"url":"https://kypent-cpap.netlify.app","repo":"(Netlify)","keywords":["CPAP","양압기","수면무호흡","OSA","마스크"],"verified":false},{"id":"sovt","category":"voice","title":"집에서 하는 SOVT 음성치료","summary":"빨대 발성 등 반폐쇄 성도 운동(SOVT)을 집에서 따라 하는 음성치료 앱","audience":["patient"],"url":"https://kypent2952-stack.github.io/speech/","repo":"speech","keywords":["SOVT","음성치료","빨대 발성","쉰 목소리","성대","발성 연습"],"verified":false},{"id":"sjogren","category":"oral","title":"쇼그렌 증후군 가이드","summary":"구강·안구 건조부터 진단 기준(ACR/EULAR), 검사 판독, 치료까지 정리한 임상 가이드","audience":["pro","patient"],"url":"https://kypent2952-stack.github.io/sjogrens-guide/","repo":"sjogrens-guide","keywords":["쇼그렌","Sjögren","구강건조","안구건조","침샘","자가면역","ACR/EULAR"],"verified":false}],"upcoming":[{"title":"구강내 병변 가이드","category":"oral","summary":"구내염·백반증 등 입안 병변의 감별과 진료 시점"},{"title":"수면다원검사 안내","category":"sleep","summary":"검사 전 준비, 검사 당일 과정, 결과지 읽는 법"},{"title":"음성위생 가이드","category":"voice","summary":"목소리를 아끼는 생활 습관과 직업군별 주의점"}]}</script>
+<!-- FALLBACK:JSON:END -->
+
+  <script>
+  (function () {
+    'use strict';
+    var AUD = { pro: '의료진', patient: '환자' };
+    var state = { data: null, q: '', aud: 'all' };
+    var listEl = document.getElementById('list');
+    var upEl = document.getElementById('upcoming');
+    var statusEl = document.getElementById('status');
+    var qEl = document.getElementById('q');
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function norm(s) { return String(s || '').toLowerCase().normalize('NFC').replace(/\s+/g, ''); }
+
+    function cardHTML(g) {
+      var tags = (g.audience || []).map(function (a) {
+        return '<span class="kyp-badge kyp-badge--' + esc(a) + '">' + esc(AUD[a] || a) + '</span>';
+      }).join('');
+      return '<li><article class="kyp-card guide"><h3>' + esc(g.title) + '</h3>' +
+        '<div class="guide__tags">' + tags + '</div>' +
+        '<p>' + esc(g.summary) + '</p>' +
+        '<div class="guide__actions"><a class="kyp-btn" href="' + esc(g.url) + '" aria-label="' + esc(g.title) + ' 바로가기">바로가기 →</a></div>' +
+        '</article></li>';
+    }
+
+    function matches(g) {
+      if (state.aud !== 'all' && (g.audience || []).indexOf(state.aud) === -1) return false;
+      if (!state.q) return true;
+      var cat = (state.data.categories || []).filter(function (c) { return c.id === g.category; })[0];
+      var hay = norm([g.title, g.summary, (g.keywords || []).join(' '), cat ? cat.name : '',
+        (g.audience || []).map(function (a) { return AUD[a]; }).join(' ')].join(' '));
+      return state.q.split(/\s+/).filter(Boolean).every(function (t) { return hay.indexOf(norm(t)) !== -1; });
+    }
+
+    function render() {
+      var d = state.data, total = 0, html = '';
+      (d.categories || []).forEach(function (c) {
+        var items = (d.guides || []).filter(function (g) { return g.category === c.id && matches(g); });
+        if (!items.length) return;
+        total += items.length;
+        html += '<section class="cat" data-cat="' + esc(c.id) + '" aria-labelledby="cat-' + esc(c.id) + '">' +
+          '<div class="cat__head"><h2 id="cat-' + esc(c.id) + '"><span aria-hidden="true">' + esc(c.icon) + '</span> ' + esc(c.name) + '</h2>' +
+          '<p>' + esc(c.description) + '</p></div><ul class="grid">' + items.map(cardHTML).join('') + '</ul></section>';
+      });
+      if (!total) {
+        html = '<div class="kyp-card empty"><p>‘' + esc(state.q || AUD[state.aud]) + '’에 맞는 가이드가 아직 없습니다.</p>' +
+          '<button type="button" class="kyp-btn kyp-btn--ghost" id="reset">검색 초기화</button></div>';
+      }
+      listEl.innerHTML = html;
+      var r = document.getElementById('reset');
+      if (r) r.addEventListener('click', reset);
+      var filtered = state.q || state.aud !== 'all';
+      statusEl.textContent = filtered ? '가이드 ' + total + '개를 찾았습니다.' : '가이드 ' + total + '개';
+    }
+
+    function renderUpcoming() {
+      var u = state.data.upcoming || [];
+      if (!u.length) return;
+      upEl.innerHTML = u.map(function (x) {
+        return '<li><div class="kyp-card soon"><span class="kyp-badge">준비 중</span><h3>' + esc(x.title) + '</h3><p>' + esc(x.summary) + '</p></div></li>';
+      }).join('');
+    }
+
+    function reset() {
+      state.q = ''; qEl.value = ''; setAud('all'); render(); qEl.focus();
+    }
+    function setAud(a) {
+      state.aud = a;
+      Array.prototype.forEach.call(document.querySelectorAll('#aud .chip'), function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-aud') === a));
+      });
+    }
+
+    function start(data, source) {
+      state.data = data;
+      document.documentElement.setAttribute('data-guides-source', source);
+      // URL ?q= 로 들어온 검색어 반영 (예: 404 페이지에서 넘어온 경우)
+      try {
+        var p = new URLSearchParams(location.search).get('q');
+        if (p) { state.q = p.trim(); qEl.value = state.q; }
+      } catch (e) {}
+      renderUpcoming();
+      render();
+    }
+
+    function fallback() {
+      try {
+        var d = JSON.parse(document.getElementById('guides-fallback').textContent);
+        if (d && d.guides && d.guides.length) return start(d, 'fallback');
+      } catch (e) {}
+      // 내장 JSON도 없으면 정적 HTML을 그대로 둔다 (검색은 비활성)
+      statusEl.textContent = '';
+    }
+
+    var t;
+    qEl.addEventListener('input', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { state.q = qEl.value.trim(); if (state.data) render(); }, 120);
+    });
+    document.getElementById('aud').addEventListener('click', function (e) {
+      var b = e.target.closest('.chip');
+      if (!b) return;
+      setAud(b.getAttribute('data-aud'));
+      if (state.data) render();
+    });
+
+    if (window.fetch && location.protocol !== 'file:') {
+      fetch('guides.json', { cache: 'no-cache' })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (d) { if (!d || !d.guides) throw new Error('bad'); start(d, 'json'); })
+        .catch(fallback);
+    } else {
+      fallback();
+    }
+  })();
+  </script>
+</body>
+</html>
